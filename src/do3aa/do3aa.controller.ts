@@ -1,6 +1,7 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { Do3aaService } from './do3aa.service';
 import { CreateDo3aaDto } from './dto/create-do3aa.dto';
+import { SearchDo3aaDto } from './dto/search-do3aa.dto';
 import { UpdateDo3aaDto } from './dto/update-do3aa.dto';
 
 @Controller('do3aa')
@@ -8,32 +9,56 @@ export class Do3aaController {
   constructor(private readonly do3aaService: Do3aaService) {}
 
   @Post('/add')
-  create(@Body() createDo3aaDto: CreateDo3aaDto) {
-    return this.do3aaService.create(createDo3aaDto);
+  async create(@Body() createDo3aaDto: CreateDo3aaDto) {
+    const data = await this.do3aaService.create(createDo3aaDto);
+    return{
+      message:"Do3aa created",
+      data:data
+    }
   }
 
   @Get('/list/all')
-  findAll() {
-    return this.do3aaService.findAll();
+  async findAll() {
+    const data = await this.do3aaService.findAll();
+    return{
+      message:"Do3aa found",
+      data:data
+    }
   }
 
   @Get('/list/:id')
-  findOne(@Param('id') id: string) {
-    return this.do3aaService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    const data = await this.do3aaService.findOne(+id);
+    return{
+      message:"Do3aa found",
+      data:data
+    }
   }
 
   @Patch('/update/:id')
-  update(@Param('id') id: string, @Body() updateDo3aaDto: UpdateDo3aaDto) {
-    return this.do3aaService.update(+id, updateDo3aaDto);
+  async update(@Param('id') id: string, @Body() updateDo3aaDto: UpdateDo3aaDto) {
+    const data = await this.do3aaService.update(+id, updateDo3aaDto);
+    return{
+      message:"Do3aa updated",
+      data:data
+    }
   }
 
   @Delete('/delete/:id')
-  remove(@Param('id') id: string) {
-    return this.do3aaService.remove(+id);
+  async remove(@Param('id') id: string) {
+    const data = await this.do3aaService.remove(+id);
+    return{
+      message:"Do3aa deleted",
+      data:data
+    }
   }
 
-  //@Post('/search')
-  //create(@Body() createDo3aaDto: CreateDo3aaDto) {
-    //return this.do3aaService.create(createDo3aaDto);
-  //}
+  @Post('/search')
+  async search(@Body() searchDo3aaDto: SearchDo3aaDto) {
+    const data = await this.do3aaService.search(searchDo3aaDto);
+    return{
+      message:"Searching for" + searchDo3aaDto.do3aa,
+      data:data
+    }
+  }
 }

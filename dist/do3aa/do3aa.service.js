@@ -47,12 +47,23 @@ let Do3aaService = class Do3aaService {
         });
         return do3aa;
     }
-    remove(id) {
-        {
+    async remove(id) {
+        const do3aa = await this.prisma.do3aa.delete({
             where: {
-                id: id;
+                id: id,
             }
-        }
+        });
+        return do3aa;
+    }
+    async search(searchDo3aaDto) {
+        const do3aa = await this.prisma.do3aa.findMany({
+            where: {
+                do3aa: {
+                    search: searchDo3aaDto.do3aa
+                }
+            },
+        });
+        return do3aa;
     }
 };
 Do3aaService = __decorate([

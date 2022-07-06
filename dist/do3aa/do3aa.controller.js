@@ -16,25 +16,53 @@ exports.Do3aaController = void 0;
 const common_1 = require("@nestjs/common");
 const do3aa_service_1 = require("./do3aa.service");
 const create_do3aa_dto_1 = require("./dto/create-do3aa.dto");
+const search_do3aa_dto_1 = require("./dto/search-do3aa.dto");
 const update_do3aa_dto_1 = require("./dto/update-do3aa.dto");
 let Do3aaController = class Do3aaController {
     constructor(do3aaService) {
         this.do3aaService = do3aaService;
     }
-    create(createDo3aaDto) {
-        return this.do3aaService.create(createDo3aaDto);
+    async create(createDo3aaDto) {
+        const data = await this.do3aaService.create(createDo3aaDto);
+        return {
+            message: "Do3aa created",
+            data: data
+        };
     }
-    findAll() {
-        return this.do3aaService.findAll();
+    async findAll() {
+        const data = await this.do3aaService.findAll();
+        return {
+            message: "Do3aa found",
+            data: data
+        };
     }
-    findOne(id) {
-        return this.do3aaService.findOne(+id);
+    async findOne(id) {
+        const data = await this.do3aaService.findOne(+id);
+        return {
+            message: "Do3aa found",
+            data: data
+        };
     }
-    update(id, updateDo3aaDto) {
-        return this.do3aaService.update(+id, updateDo3aaDto);
+    async update(id, updateDo3aaDto) {
+        const data = await this.do3aaService.update(+id, updateDo3aaDto);
+        return {
+            message: "Do3aa updated",
+            data: data
+        };
     }
-    remove(id) {
-        return this.do3aaService.remove(+id);
+    async remove(id) {
+        const data = await this.do3aaService.remove(+id);
+        return {
+            message: "Do3aa deleted",
+            data: data
+        };
+    }
+    async search(searchDo3aaDto) {
+        const data = await this.do3aaService.search(searchDo3aaDto);
+        return {
+            message: "Searching for" + searchDo3aaDto.do3aa,
+            data: data
+        };
     }
 };
 __decorate([
@@ -42,20 +70,20 @@ __decorate([
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_do3aa_dto_1.CreateDo3aaDto]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], Do3aaController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)('/list/all'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], Do3aaController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Get)('/list/:id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], Do3aaController.prototype, "findOne", null);
 __decorate([
     (0, common_1.Patch)('/update/:id'),
@@ -63,15 +91,22 @@ __decorate([
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, update_do3aa_dto_1.UpdateDo3aaDto]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], Do3aaController.prototype, "update", null);
 __decorate([
     (0, common_1.Delete)('/delete/:id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], Do3aaController.prototype, "remove", null);
+__decorate([
+    (0, common_1.Post)('/search'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [search_do3aa_dto_1.SearchDo3aaDto]),
+    __metadata("design:returntype", Promise)
+], Do3aaController.prototype, "search", null);
 Do3aaController = __decorate([
     (0, common_1.Controller)('do3aa'),
     __metadata("design:paramtypes", [do3aa_service_1.Do3aaService])
